@@ -35,6 +35,7 @@ Plugin 'powerline/fonts'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'ggreer/the_silver_searcher'
 Plugin 'mileszs/ack.vim'
+Plugin 'Yggdroot/indentLine'
 "Plugin 'sjl/gundo.vim' "不能使用，还没有找到原因，目前用the_silver_searcher
 "代替
 Plugin 'scrooloose/nerdcommenter'
@@ -142,6 +143,11 @@ nmap <Leader>ch :A<CR>
 " 子窗口中显示 *.cpp 或 *.h
 nmap <Leader>sch :AS<CR>
 
+"Plugin indentLine settings
+let g:indentLine_char = "┆"
+let g:indentLine_enabled = 1
+let g:autopep8_disable_show_diff = 1
+let g:indentLine_color_term = 239
 
 """Nerdtree config""""
 let NERDTreeQuitOnOpen=1
@@ -234,8 +240,12 @@ set encoding=utf8
 "set expandtab "进行tab和空格的转换 
 set noexpandtab "不进行tab 和空格的转换
 set shiftwidth=4
-set tabstop=4 "决定多少个空格将转换成tab
-set softtabstop=4	"决定将tab转换成多少个space
+set tabstop=8 "决定多少个空格将转换成tab
+set softtabstop=12 "决定将tab转换成多少个spac
+
+
+
+
 
 set autoindent
 set cindent
@@ -277,3 +287,14 @@ nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 ":YcmDebugInfo  查看debuginfo 信息
 
+
+
+"Auto add head info
+".py file into add header
+function HeaderPython()
+    call setline(1,"#!/usr/bin/env python")
+    call append(1,"# -*- coding=utf-8 -*-")
+    normal G
+    normal o
+endf
+autocmd bufnewfile *.py call HeaderPython()
