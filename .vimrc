@@ -207,15 +207,12 @@ set wrap "长行显示自动折行
 :set fileformats=unix,dos
 
 """"tab键和缩进设置
-"tab默认占8列
-set tabstop=4 " 在插入模式下，输入tab键占据的空格数量
-set shiftwidth=4 "通过>> or << 定义缩进的列数
-set softtabstop=4 "定义tab 实际占有的列数
-autocmd FileType python set expandtab" 定义python格式的文件，自动将tab转换为空格"
+"set tabstop=4 " 在插入模式下，输入tab键占据的空格数量
+"set shiftwidth=4 "通过VIM 命令自动进行缩进处理
+"set softtabstop=4 "连续空格转为tab
 "通过 执行retab命令，可以让Vim 按照上述规则处理他人的缩进"
 set list
-"set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
-set listchars=tab:>-,trail:-
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:. " Highlight problematic whitespace
 "set wildmenu                    " Show list instead of just completing
 "set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
@@ -238,13 +235,13 @@ set nofoldenable
 
 
 """python 配置
-"set encoding=utf8
+set encoding=utf8
 "set paste   #这个设置让我不能使用映射 map ,同时自动缩进也不能使用
 "set expandtab "进行tab和空格的转换 
-"set noexpandtab "不进行tab 和空格的转换
-"set shiftwidth=4
-"set tabstop=8 决定多少个空格将转换成tab
-"set softtabstop=12 "决定将tab转换成多少个spac
+set noexpandtab "不进行tab 和空格的转换
+set shiftwidth=4
+set tabstop=8 "决定多少个空格将转换成tab
+set softtabstop=12 "决定将tab转换成多少个spac
 
 
 
@@ -262,8 +259,6 @@ set foldlevel=0
 set clipboard+=unnamed
 
 
-"定义强制保存快捷键
-cmap w!! w !sudo tee > /dev/null %
 """"function""""""""""""""
 " 自动定位到上次修改的位
 if has("autocmd")
