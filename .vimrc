@@ -25,30 +25,63 @@ Plugin 'VundleVim/Vundle.vim'
 
 "Keep Plugin commands between vundle#begin/end.
 "plugin on GitHub repo
+"状态栏配置方案，使用苹果monaca 的powerline字体
 Plugin 'vim-airline/vim-airline'
+"使用苹果字体的powerline 
+Plugin 'inoyatov/monaco'
+"选择solarized 的配色
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'tomasr/molokai'
+"适应solarized 的ls配色
+Plugin 'seebi/dircolors-solarized'
+"适应solarized 的gnome-terminal 配色
+Plugin 'Anthony25/gnome-terminal-colors-solarized'
+Plugin 'tomasr/molokai'     "这个插件也可以不用了，已经选择使用solarized 配色"
+"列出文件夹结构插件
 Plugin 'scrooloose/nerdtree'
-Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline-themes'   "这个插件可以不用了，上面已经有配色插件了"
+"查找文件插件
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'powerline/fonts' 
+"其他字体插件
+Plugin 'powerline/fonts'  
+"快速移动插件
 Plugin 'easymotion/vim-easymotion'
+"代码搜索插件,与ack 搭配使用
 Plugin 'ggreer/the_silver_searcher'
 Plugin 'mileszs/ack.vim'
+"显示缩进阶层
 Plugin 'Yggdroot/indentLine'
 "Plugin 'sjl/gundo.vim' "不能使用，还没有找到原因，目前用the_silver_searcher
 "代替
+"快速注释插件
 Plugin 'scrooloose/nerdcommenter'
+"类轮廓显示器
 Plugin 'majutsushi/tagbar'
+"tagbar 需要ctags 提供的tags 文件
+Plugin 'universal-ctags/ctags'
+"最终撤销历史可视化插件
 Plugin 'mbbill/undotree'
+"代码块快捷生成插件
 Plugin 'SirVer/ultisnips'  "代码块引擎
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'honza/vim-snippets' "代码块集合
+"括号对自动生成插件
+Plugin 'jiangmiao/auto-pairs'
 "Plugin 'ervandew/supertab'
-Plugin 'Shougo/neocomplete.vim'
+"Plugin 'Shougo/neocomplete.vim'   for vim8  can't use
+"异步补全框架
+if has('nvim')
+	Plugin 'Shougo/deoplete.nvim',{ 'do': ':UpdateRemotePlugins' }
+else
+	Plugin 'Shougo/deoplete.nvim' "for neovim or vim8
+	Plugin 'roxma/nvim-yarp'
+	Plugin 'roxma/vim-hug-neovim-rpc'
+endif
+"显示缩进等级插件
 Plugin 'nathanaelkane/vim-indent-guides'
+".c与.h 快速选择插件
 Plugin 'vim-scripts/a.vim'
+"触发，显示，控制标签插件
 Plugin 'kshenoy/vim-signature'
+"自动不全插件
 Plugin 'Valloric/YouCompleteMe' "已经包含supertab，所以不再安装supertab  ，发现与ultisnips tab键有冲突
 "All of your Plugins must be added before the following line
 "  :help mark-motions 查看如何在文件内及文件之间打mark
@@ -62,25 +95,23 @@ let mapleader=";" "mapleader 对所有map映射命令生效，作用将参数<le
 "set t_Co=256
 set laststatus=2 "总是显示状态栏"
 set lazyredraw
-"使用苹果字体for powerline github链接： https://github.com/inoyatov/monaco.gi
+"使用苹果字体for powerline github链接： https://github.com/inoyatov/monaco.git
 let g:airline_powerline_fonts = 1
 
 "vim-easymotion profile
-"默认;;w，搜索单词，行内搜索使用;h or ;l 以及 ;.重复上一个动作用 ;.
+"默认;;w，搜索单词，重复上一个动作用 ;.
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
-"map <Leader>j <Plug>(easymotion-j)
-"map <Leader>k <Plug>(easymotion-k)
 "map <Leader><leader>w <Plug>(easymotion-word)
 "map <Leader><leader>b <Plug>(easymotin-back)
 "map <Leader><leader>s <Plug>(easymotion-search)
-"map <leader><leader>h <Plug>(easymotion-linebackwrard)
 "map <Leader><leader>j <Plug>(easymotion-j)
 "map <Leader><leader>k <Plug>(easymotion-k)
-"map <Leader><leader>l <Plug>(easymotion-lineforword)
 map <Leader>. <Plug>(easymotion-repeat)
-"map <Leader>q <Plug>(easymotion-lineforward)  #行内移动
 map <Leader>h <Plug>(easymotion-linebackward)
+"单词移动
+nmap <Leader>w <Plug>(easymotion-overwin-w)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 "UltiSnips settings 
 let g:UltiSnipsExpandTrigger = '<c-l>'
@@ -97,9 +128,10 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 "设置切换buffer快捷键
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 """ solarized"""
-syntax on  "允许用指定的语法高亮配色方案替换默认方案
 let g:solarized_termcolors=256
 let g:solarized_termtrans=1
+syntax enable"允许用指定的语法高亮配色方案替换默认方案
+"let g:airline_theme='solarized_flood'
 "set background=light
 set background=dark
 colorscheme solarized
@@ -124,12 +156,12 @@ nnoremap <F5> :UndotreeToggle<CR>
 "<leader>ca 选择注释的方式
 "<leader>cc 注释当前行，可以指定行数
 "<leader>cs a sexy 注释
-"<leader>cA 行尾加上注释，并进入insert
+"<leader>cA 行尾加上注释，并进入insert 
 "<leader>cu  取消注释
 
 "Tagbar 使用
 nmap <F9> :TagbarToggle<CR>
-let g:tagbar_ctags_bin = '$HOME/ctags-5.8/ctags'
+"let g:tagbar_ctags_bin = '$HOME/ctags/bin'
 " 随 vim 自启动
 let g:indent_guides_enable_on_vim_startup=1
 " 从第二层开始可视化显示缩进
@@ -150,8 +182,10 @@ let g:autopep8_disable_show_diff = 1
 let g:indentLine_color_term = 239
 
 """Nerdtree config""""
+"使用o,t,i打开文件或者目录后，层级目录结构关闭
 let NERDTreeQuitOnOpen=1
 map <F2> :NERDTreeToggle<CR>
+"当使用vim,打开一个目录或者没有指定任何一个文件时，将触发F2 ，显示目录结构
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene |endif
@@ -278,7 +312,7 @@ if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column
     set grepformat=%f:%l:%c%m
 endif
-"YcmCompleter
+"YouCompleteMe
 let g:ycm_min_num_of_chars_for_completion= 2
 let g:ycm_complete_in_comments = 1
 let g:ycm_confirm_extra_conf = 1
@@ -292,7 +326,8 @@ nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 ":YcmDebugInfo  查看debuginfo 信息
 
-
+"use deoplete.
+"let g:deoplete#enable_at_startup = 1
 
 "Auto add head info
 ".py file into add header
