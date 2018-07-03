@@ -39,6 +39,10 @@ Plugin 'tomasr/molokai'     "这个插件也可以不用了，已经选择使用
 "列出文件夹结构插件
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline-themes'   "这个插件可以不用了，上面已经有配色插件了"
+"markdown 相关的插件
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'suan/vim-instant-markdown' "实时预览插件
 "查找文件插件
 Plugin 'ctrlpvim/ctrlp.vim'
 "其他字体插件
@@ -254,6 +258,8 @@ set listchars=tab:>-,trail:-
 "set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 
+
+
 highlight clear SignColumn "SignColumn should match background
 highlight clear LineNr      "Current line number row will have same background color in relative mode
 
@@ -338,3 +344,6 @@ function HeaderPython()
     normal o
 endf
 autocmd bufnewfile *.py call HeaderPython()
+
+" vim-markdown 配置markdown 插件
+let g:vim_markdown_folding_disabled = 1
