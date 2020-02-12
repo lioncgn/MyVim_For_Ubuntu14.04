@@ -1,97 +1,59 @@
-
-""使用vundle 自动安装插件
-"""""""""""""""""""""""""""""
-"第一步：git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-set nocompatible "be iMproved,required
-filetype off "required
-"Brief help
-":BundleList--列举出列表中配置的所有插件
-":BundleInstall---安装列表中所有插件
-":BundleInstall!---更新列表中所有插件
-":BundleSearch foo---查找foo 插件
-":BundleSearch! foo ---刷新foo插件缓存
-":BundleClean--清除列表中所有插件
-":BundleClean!--清除列表中没有的插件
-"see :h vundle for more details or wiki for FAQ
-"set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-"alternatively,pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-call vundle#begin()
-
-"let Vundle manage Vundle,required
-Plugin 'VundleVim/Vundle.vim'
-
-"Keep Plugin commands between vundle#begin/end.
-"plugin on GitHub repo
-"状态栏配置方案，使用苹果monaca 的powerline字体
-Plugin 'vim-airline/vim-airline'
-"使用苹果字体的powerline 
-Plugin 'inoyatov/monaco'
-"选择solarized 的配色
-Plugin 'altercation/vim-colors-solarized'
-"适应solarized 的ls配色
-Plugin 'seebi/dircolors-solarized'
-"适应solarized 的gnome-terminal 配色
-Plugin 'Anthony25/gnome-terminal-colors-solarized'
-Plugin 'tomasr/molokai'     "这个插件也可以不用了，已经选择使用solarized 配色"
-"列出文件夹结构插件
-Plugin 'scrooloose/nerdtree'
-Plugin 'vim-airline/vim-airline-themes'   "这个插件可以不用了，上面已经有配色插件了"
-"markdown 相关的插件
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'suan/vim-instant-markdown' "实时预览插件
-"查找文件插件
-Plugin 'ctrlpvim/ctrlp.vim'
-"其他字体插件
-Plugin 'powerline/fonts'  
-"快速移动插件
-Plugin 'easymotion/vim-easymotion'
-"代码搜索插件,与ack 搭配使用
-Plugin 'ggreer/the_silver_searcher'
-Plugin 'mileszs/ack.vim'
-"显示缩进阶层
-Plugin 'Yggdroot/indentLine'
-"Plugin 'sjl/gundo.vim' "不能使用，还没有找到原因，目前用the_silver_searcher
-"代替
-"快速注释插件
-Plugin 'scrooloose/nerdcommenter'
-"类轮廓显示器
-Plugin 'majutsushi/tagbar'
-"tagbar 需要ctags 提供的tags 文件
-Plugin 'universal-ctags/ctags'
-"最终撤销历史可视化插件
-Plugin 'mbbill/undotree'
-"代码块快捷生成插件
-Plugin 'SirVer/ultisnips'  "代码块引擎
-Plugin 'honza/vim-snippets' "代码块集合
-"括号对自动生成插件
-Plugin 'jiangmiao/auto-pairs'
-"Plugin 'ervandew/supertab'
-"Plugin 'Shougo/neocomplete.vim'   for vim8  can't use
-"异步补全框架
-if has('nvim')
-	Plugin 'Shougo/deoplete.nvim',{ 'do': ':UpdateRemotePlugins' }
-else
-	Plugin 'Shougo/deoplete.nvim' "for neovim or vim8
-	Plugin 'roxma/nvim-yarp'
-	Plugin 'roxma/vim-hug-neovim-rpc'
+"使用vim-plug插件管理器管理vim插件
+"自动化安装vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * Plugstall --sync |source ~/.vimrc
 endif
-"显示缩进等级插件
-Plugin 'nathanaelkane/vim-indent-guides'
-".c与.h 快速选择插件
-Plugin 'vim-scripts/a.vim'
-"触发，显示，控制标签插件
-Plugin 'kshenoy/vim-signature'
-"自动不全插件
-Plugin 'Valloric/YouCompleteMe' "已经包含supertab，所以不再安装supertab  ，发现与ultisnips tab键有冲突
-"All of your Plugins must be added before the following line
+"PlugInstall 安装插件
+"PlugUpdate 安装或者更新插件
+"PlugClean   移除未被使用的目录
+"PlugUpgrade 升级vim-plug这个管理器
+"PlugStatus 检查插件的状态
+"PlugDiff 检查以前更新的和现在的变化
+"PlugSnapshot 生成存储现在插件快照的脚本
+call plug#begin('~/.vim/bundle')
+"Plug on GitHub repo
+Plug 'vim-airline/vim-airline'
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'powerline/fonts' 
+"快速查找字符插件
+Plug 'easymotion/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+Plug 'haya14busa/incsearch.vim'
+"代码检测，代码对齐
+Plug 'junegunn/vim-easy-align'
+Plug 'w0rp/ale'
+"快速插入，移除或者改变一对符号
+Plug 'tpope/vim-surround'
+"快速选择代码块
+Plug 'terryma/vim-expand-region'
+Plug 'ggreer/the_silver_searcher'
+Plug 'mileszs/ack.vim'
+Plug 'Yggdroot/indentLine'
+"Plug 'sjl/gundo.vim' "不能使用，还没有找到原因，目前用the_silver_searcher
+"代替
+Plug 'scrooloose/nerdcommenter'
+Plug 'majutsushi/tagbar'
+Plug 'mbbill/undotree'
+Plug 'jiangmiao/auto-pairs'
+Plug 'honza/vim-snippets' "代码块集合
+"Plug 'ervandew/supertab'
+Plug 'Shougo/neocomplete.vim'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-scripts/a.vim'
+Plug 'kshenoy/vim-signature'
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+
+Plug 'SirVer/ultisnips', {'on': []}  "代码块引擎
+Plug 'Valloric/YouCompleteMe', {'on': []} "已经包含supertab，所以不再安装supertab  ，发现与ultisnips tab键有冲突
 "  :help mark-motions 查看如何在文件内及文件之间打mark
-call vundle#end() "required
-filetype plugin indent on "required
-"To ingore plugin indent changes,instead use:
+
+call plug#end()
 
 " 定义快捷键的前缀，即<Leader>
 let mapleader=";" "mapleader 对所有map映射命令生效，作用将参数<leader> 替换成mapleader变量的值
@@ -99,23 +61,25 @@ let mapleader=";" "mapleader 对所有map映射命令生效，作用将参数<le
 "set t_Co=256
 set laststatus=2 "总是显示状态栏"
 set lazyredraw
-"使用苹果字体for powerline github链接： https://github.com/inoyatov/monaco.git
+"使用苹果字体for powerline github链接： https://github.com/inoyatov/monaco.gi
 let g:airline_powerline_fonts = 1
 
 "vim-easymotion profile
-"默认;;w，搜索单词，重复上一个动作用 ;.
+"默认;;w，搜索单词，行内搜索使用;h or ;l 以及 ;.重复上一个动作用 ;.
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0 " keep cursor column when JK motion
+"map <Leader>j <Plug>(easymotion-j)
+"map <Leader>k <Plug>(easymotion-k)
 "map <Leader><leader>w <Plug>(easymotion-word)
 "map <Leader><leader>b <Plug>(easymotin-back)
 "map <Leader><leader>s <Plug>(easymotion-search)
+"map <leader><leader>h <Plug>(easymotion-linebackwrard)
 "map <Leader><leader>j <Plug>(easymotion-j)
 "map <Leader><leader>k <Plug>(easymotion-k)
+"map <Leader><leader>l <Plug>(easymotion-lineforword)
 map <Leader>. <Plug>(easymotion-repeat)
+"map <Leader>q <Plug>(easymotion-lineforward)  #行内移动
 map <Leader>h <Plug>(easymotion-linebackward)
-"单词移动
-nmap <Leader>w <Plug>(easymotion-overwin-w)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
 
 "UltiSnips settings 
 let g:UltiSnipsExpandTrigger = '<c-l>'
@@ -132,10 +96,9 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 "设置切换buffer快捷键
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 """ solarized"""
+syntax on  "允许用指定的语法高亮配色方案替换默认方案
 let g:solarized_termcolors=256
 let g:solarized_termtrans=1
-syntax enable"允许用指定的语法高亮配色方案替换默认方案
-"let g:airline_theme='solarized_flood'
 "set background=light
 set background=dark
 colorscheme solarized
@@ -160,12 +123,12 @@ nnoremap <F5> :UndotreeToggle<CR>
 "<leader>ca 选择注释的方式
 "<leader>cc 注释当前行，可以指定行数
 "<leader>cs a sexy 注释
-"<leader>cA 行尾加上注释，并进入insert 
+"<leader>cA 行尾加上注释，并进入insert
 "<leader>cu  取消注释
 
 "Tagbar 使用
 nmap <F9> :TagbarToggle<CR>
-"let g:tagbar_ctags_bin = '$HOME/ctags/bin'
+let g:tagbar_ctags_bin = '$HOME/ctags-5.8/ctags'
 " 随 vim 自启动
 let g:indent_guides_enable_on_vim_startup=1
 " 从第二层开始可视化显示缩进
@@ -179,17 +142,15 @@ nmap <Leader>ch :A<CR>
 " 子窗口中显示 *.cpp 或 *.h
 nmap <Leader>sch :AS<CR>
 
-"Plugin indentLine settings
+"Plug indentLine settings
 let g:indentLine_char = "┆"
 let g:indentLine_enabled = 1
 let g:autopep8_disable_show_diff = 1
 let g:indentLine_color_term = 239
 
 """Nerdtree config""""
-"使用o,t,i打开文件或者目录后，层级目录结构关闭
 let NERDTreeQuitOnOpen=1
 map <F2> :NERDTreeToggle<CR>
-"当使用vim,打开一个目录或者没有指定任何一个文件时，将触发F2 ，显示目录结构
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene |endif
@@ -258,8 +219,6 @@ set listchars=tab:>-,trail:-
 "set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
 set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
 
-
-
 highlight clear SignColumn "SignColumn should match background
 highlight clear LineNr      "Current line number row will have same background color in relative mode
 
@@ -318,12 +277,12 @@ if executable('ag')
     set grepprg=ag\ --nogroup\ --nocolor\ --column
     set grepformat=%f:%l:%c%m
 endif
-"YouCompleteMe
+"YcmCompleter
 let g:ycm_min_num_of_chars_for_completion= 2
 let g:ycm_complete_in_comments = 1
 let g:ycm_confirm_extra_conf = 1
-let g:ycm_server_python_interpreter='/usr/bin/python'
-let g:ycm_global_ycm_extra_conf='~/.vim/personal/.ycm_extra_conf.py'
+let g:ycm_server_python_interpreter='/usr/bin/python2'
+let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 let g:ycm_complete_in_comments = 1
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -332,8 +291,7 @@ nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 ":YcmDebugInfo  查看debuginfo 信息
 
-"use deoplete.
-"let g:deoplete#enable_at_startup = 1
+
 
 "Auto add head info
 ".py file into add header
@@ -345,5 +303,8 @@ function HeaderPython()
 endf
 autocmd bufnewfile *.py call HeaderPython()
 
-" vim-markdown 配置markdown 插件
-let g:vim_markdown_folding_disabled = 1
+
+augroup load_us_ycm
+	autocmd!
+	autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe') | autocmd! load_us_ycm
+augroup END
