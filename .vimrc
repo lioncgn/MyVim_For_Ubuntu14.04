@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 ""使用vundle 自动安装插件
 """""""""""""""""""""""""""""
@@ -89,64 +88,10 @@ Plugin 'kshenoy/vim-signature'
 "自动不全插件
 Plugin 'Valloric/YouCompleteMe' "已经包含supertab，所以不再安装supertab  ，发现与ultisnips tab键有冲突
 "All of your Plugins must be added before the following line
-=======
-"使用vim-plug插件管理器管理vim插件
-"自动化安装vim-plug
-if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * Plugstall --sync |source ~/.vimrc
-endif
-"PlugInstall 安装插件
-"PlugUpdate 安装或者更新插件
-"PlugClean   移除未被使用的目录
-"PlugUpgrade 升级vim-plug这个管理器
-"PlugStatus 检查插件的状态
-"PlugDiff 检查以前更新的和现在的变化
-"PlugSnapshot 生成存储现在插件快照的脚本
-call plug#begin('~/.vim/bundle')
-"Plug on GitHub repo
-Plug 'vim-airline/vim-airline'
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
-Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'powerline/fonts' 
-"快速查找字符插件
-Plug 'easymotion/vim-easymotion'
-Plug 'justinmk/vim-sneak'
-Plug 'haya14busa/incsearch.vim'
-"代码检测，代码对齐
-Plug 'junegunn/vim-easy-align'
-Plug 'w0rp/ale'
-"快速插入，移除或者改变一对符号
-Plug 'tpope/vim-surround'
-"快速选择代码块
-Plug 'terryma/vim-expand-region'
-Plug 'ggreer/the_silver_searcher'
-Plug 'mileszs/ack.vim'
-Plug 'Yggdroot/indentLine'
-"Plug 'sjl/gundo.vim' "不能使用，还没有找到原因，目前用the_silver_searcher
-"代替
-Plug 'scrooloose/nerdcommenter'
-Plug 'majutsushi/tagbar'
-Plug 'mbbill/undotree'
-Plug 'jiangmiao/auto-pairs'
-Plug 'honza/vim-snippets' "代码块集合
-"Plug 'ervandew/supertab'
-Plug 'Shougo/neocomplete.vim'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vim-scripts/a.vim'
-Plug 'kshenoy/vim-signature'
-Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
-
-Plug 'SirVer/ultisnips', {'on': []}  "代码块引擎
-Plug 'Valloric/YouCompleteMe', {'on': []} "已经包含supertab，所以不再安装supertab  ，发现与ultisnips tab键有冲突
->>>>>>> ed36343... modify plugin management
 "  :help mark-motions 查看如何在文件内及文件之间打mark
-
-call plug#end()
+call vundle#end() "required
+filetype plugin indent on "required
+"To ingore plugin indent changes,instead use:
 
 " 定义快捷键的前缀，即<Leader>
 let mapleader=";" "mapleader 对所有map映射命令生效，作用将参数<leader> 替换成mapleader变量的值
@@ -234,7 +179,7 @@ nmap <Leader>ch :A<CR>
 " 子窗口中显示 *.cpp 或 *.h
 nmap <Leader>sch :AS<CR>
 
-"Plug indentLine settings
+"Plugin indentLine settings
 let g:indentLine_char = "┆"
 let g:indentLine_enabled = 1
 let g:autopep8_disable_show_diff = 1
@@ -377,8 +322,8 @@ endif
 let g:ycm_min_num_of_chars_for_completion= 2
 let g:ycm_complete_in_comments = 1
 let g:ycm_confirm_extra_conf = 1
-let g:ycm_server_python_interpreter='/usr/bin/python2'
-let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
+let g:ycm_server_python_interpreter='/usr/bin/python'
+let g:ycm_global_ycm_extra_conf='~/.vim/personal/.ycm_extra_conf.py'
 let g:ycm_complete_in_comments = 1
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -402,8 +347,3 @@ autocmd bufnewfile *.py call HeaderPython()
 
 " vim-markdown 配置markdown 插件
 let g:vim_markdown_folding_disabled = 1
-
-augroup load_us_ycm
-	autocmd!
-	autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe') | autocmd! load_us_ycm
-augroup END
